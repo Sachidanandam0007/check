@@ -2,1359 +2,1110 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Recompose Recycling | Sustainable Waste Management & Circular Economy</title>
+  <title>Overworld Audio — Sonic Branding & Interactive Game Audio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Next-generation circular economy solutions, IEC waste awareness, EPR compliance, and industrial-grade recycling in Coimbatore.">
+  <meta name="description" content="Audio co-development for games and interactive experiences, from prototype to final mix.">
   <link rel="icon" href="data:,">
-  
-  <!-- Fonts -->
+
+  <!-- Typefaces: Inter + Syne + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary: #00E575;
-      --primary-dark: #008744;
-      --primary-glow: rgba(0, 229, 117, 0.28);
-      --bg: #030806;
-      --surface: #07130E;
-      --surface-card: #0D1F17;
-      --surface-border: rgba(255, 255, 255, 0.08);
-      --surface-border-hover: rgba(0, 229, 117, 0.4);
-      --text: #F0FAF5;
-      --text-muted: #8FA69B;
+      --bg: #13151f;
+      --bg-darker: #0d0e15;
+      --surface: #1a1c28;
+      --surface-glass: rgba(26, 28, 40, 0.75);
+      --border: rgba(233, 236, 238, 0.12);
+      --border-hover: rgba(233, 236, 238, 0.35);
+      --text: #e9ecee;
+      --text-muted: #8d919d;
+      --accent: #e9ecee;
+      --accent-glow: rgba(233, 236, 238, 0.3);
       --font-display: 'Syne', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --radius: 20px;
-      --radius-lg: 32px;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
-      line-height: 1.6;
-      overflow-x: hidden;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; color: inherit; border: none; background: none; cursor: pointer; }
+
+    /* ==============================================================
+       1. INITIAL SOUND GATE (OVERWORLD SIGNATURE ENTRY)
+       ============================================================== */
+    #audioGate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-darker);
+      z-index: 9999;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 5vw, 60px);
+      transition: opacity 0.8s var(--ease), visibility 0.8s var(--ease);
     }
-
-    /* Ambient background gradient inspired by GreenSutra */
-    body::before {
-      content: "";
-      position: fixed;
-      top: -20vh;
-      left: 15vw;
-      width: 70vw;
-      height: 70vh;
-      background: radial-gradient(circle, rgba(0, 229, 117, 0.08) 0%, transparent 70%);
-      filter: blur(120px);
-      z-index: -1;
+    #audioGate.hidden {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
-
-    h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -0.02em; }
-    a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 clamp(20px, 4vw, 48px);
-      width: 100%;
-    }
-
-    /* Navigation */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(20px);
-      background: rgba(3, 8, 6, 0.85);
-      border-bottom: 1px solid var(--surface-border);
-      transition: 0.3s;
-    }
-    .nav-wrap {
+    .gate-top {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
     }
-    .brand-logo {
-      display: flex;
+    .gate-center {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .gate-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      line-height: 1.05;
+    }
+    .gate-btn-main {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 18px 36px;
+      border: 1px solid var(--border-hover);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: all 0.3s var(--ease);
+      display: inline-flex;
       align-items: center;
       gap: 12px;
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 800;
-      color: #fff;
-    }
-    .brand-logo .dot {
-      width: 12px;
-      height: 12px;
-      background: var(--primary);
-      border-radius: 50%;
-      box-shadow: 0 0 16px var(--primary);
-    }
-    nav.nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-    nav.nav-links a {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: 0.25s;
-      position: relative;
-    }
-    nav.nav-links a:hover, nav.nav-links a.active {
-      color: var(--text);
-    }
-    nav.nav-links a.active::after {
-      content: "";
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 99px;
-    }
-    .nav-actions {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-    .menu-toggle {
-      display: none;
-      color: var(--text);
-      font-size: 24px;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 99px;
-      font-size: 14px;
-      font-weight: 700;
-      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: #03150D;
-      box-shadow: 0 4px 20px var(--primary-glow);
-    }
-    .btn-primary:hover {
-      background: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.25);
-    }
-    .btn-outline {
-      border: 1px solid var(--surface-border);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .btn-outline:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: rgba(0, 229, 117, 0.05);
-    }
-
-    /* Page container */
-    main { flex: 1; position: relative; }
-    .page-section {
-      display: none;
-      animation: fadeIn 0.4s ease-out forwards;
-      padding: clamp(40px, 6vw, 80px) 0;
-    }
-    .page-section.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Hero section */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: clamp(32px, 5vw, 64px);
-      align-items: center;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 99px;
-      background: rgba(0, 229, 117, 0.08);
-      border: 1px solid rgba(0, 229, 117, 0.2);
-      color: var(--primary);
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 24px;
-    }
-    .hero-title {
-      font-size: clamp(44px, 5.5vw, 76px);
-      color: #fff;
       margin-bottom: 20px;
     }
-    .hero-title span {
-      background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .gate-btn-main:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: scale(1.03);
     }
-    .hero-subtitle {
-      font-size: 18px;
-      color: var(--text-muted);
-      max-width: 560px;
-      margin-bottom: 36px;
-      line-height: 1.7;
-    }
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 48px;
-      padding-top: 36px;
-      border-top: 1px solid var(--surface-border);
-    }
-    .stat-box b {
+    .gate-btn-sub {
       display: block;
-      font-size: clamp(26px, 2.5vw, 36px);
-      color: var(--primary);
-      font-family: var(--font-display);
-    }
-    .stat-box span {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* Live Daily News Widget in Hero */
-    .hero-news-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    }
-    .hero-news-card::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .news-tag {
-      font-size: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .news-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 12px;
-      line-height: 1.35;
-    }
-    .news-desc {
-      font-size: 14.5px;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      transition: color 0.2s;
     }
-    .news-preview-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 18px;
-      display: block;
-    }
-    .news-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 16px;
-    }
-    .news-dots { display: flex; gap: 8px; }
-    .news-dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--surface-border);
-      cursor: pointer;
-      transition: 0.25s;
-    }
-    .news-dots span.active {
-      background: var(--primary);
-      width: 24px;
-      border-radius: 99px;
-    }
-
-    /* Features / Services cards */
-    .section-head {
-      text-align: center;
-      max-width: 720px;
-      margin: 0 auto 56px auto;
-    }
-    .section-head h2 {
-      font-size: clamp(32px, 3.8vw, 48px);
-      margin-bottom: 16px;
-    }
-    .section-head p {
+    .gate-btn-sub:hover { color: var(--text); }
+    .gate-progress {
+      font-family: var(--font-mono);
+      font-size: 12px;
       color: var(--text-muted);
-      font-size: 16px;
-    }
-
-    .grid-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius);
-      padding: 32px;
-      transition: all 0.35s ease;
-      position: relative;
-    }
-    .card:hover {
-      border-color: var(--surface-border-hover);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0, 229, 117, 0.05);
-    }
-    .card-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: rgba(0, 229, 117, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary);
-      font-size: 22px;
-      margin-bottom: 24px;
-    }
-    .card h3 {
-      font-size: 20px;
-      margin-bottom: 12px;
-      color: #fff;
-    }
-    .card p {
-      color: var(--text-muted);
-      font-size: 14.5px;
-      line-height: 1.6;
     }
 
     /* ==============================================================
-       INTERACTIVE WASTE SEGREGATION GAMEPLAY ARENA
+       2. TOP NAVIGATION WITH NEWS & INSTAGRAM MODULES
        ============================================================== */
-    .game-arena {
-      background: linear-gradient(180deg, var(--surface) 0%, #020905 100%);
-      border: 1px solid var(--surface-border-hover);
-      border-radius: var(--radius-lg);
-      padding: clamp(24px, 4vw, 44px);
-      position: relative;
-      margin-top: 32px;
-    }
-    .game-header {
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px clamp(20px, 4vw, 48px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      border-bottom: 1px solid var(--surface-border);
-      padding-bottom: 20px;
-      margin-bottom: 28px;
+      pointer-events: none;
     }
-    .game-stats {
-      display: flex;
-      gap: 20px;
-    }
-    .game-stat-pill {
-      background: var(--surface-card);
-      border: 1px solid var(--surface-border);
-      padding: 8px 18px;
-      border-radius: 99px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .game-stat-pill span { color: var(--primary); }
+    header * { pointer-events: auto; }
 
-    .game-play-area {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-    .draggable-card-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: var(--surface-card);
-      border: 2px dashed rgba(0, 229, 117, 0.4);
-      border-radius: var(--radius);
-      padding: 32px 20px;
-      text-align: center;
-      min-height: 280px;
-    }
-    .item-token {
-      background: #000;
-      border: 2px solid var(--primary);
-      border-radius: 20px;
-      padding: 20px 24px;
-      cursor: grab;
-      user-select: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 10px 30px var(--primary-glow);
-      display: inline-block;
-    }
-    .item-token:active { cursor: grabbing; transform: scale(1.05); }
-    .item-token .token-icon { font-size: 44px; display: block; margin-bottom: 8px; }
-    .item-token .token-name { font-weight: 800; font-size: 17px; color: #fff; }
-    .item-token .token-hint { font-size: 12px; color: var(--text-muted); }
-
-    .bins-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-    .bin-target {
-      background: var(--surface-card);
-      border: 1.5px solid var(--surface-border);
-      border-radius: 18px;
-      padding: 20px;
-      text-align: center;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .bin-target.drag-over {
-      border-color: var(--primary);
-      background: rgba(0, 229, 117, 0.1);
-      transform: scale(1.02);
-    }
-    .bin-target .bin-icon { font-size: 32px; display: block; margin-bottom: 6px; }
-    .bin-target h4 { font-size: 16px; color: #fff; margin-bottom: 4px; }
-    .bin-target p { font-size: 12px; color: var(--text-muted); }
-    .game-feedback {
-      min-height: 28px;
-      margin-top: 18px;
-      font-size: 14.5px;
-      font-weight: 700;
-      text-align: center;
-    }
-    .game-feedback.success { color: var(--primary); }
-    .game-feedback.error { color: #FF5E5E; }
-
-    /* EPR & Regimes Accordion / Tabs */
-    .tabs-nav {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      margin-bottom: 24px;
-      scrollbar-width: none;
-    }
-    .tab-pill {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      padding: 10px 20px;
-      border-radius: 99px;
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: 0.2s;
-    }
-    .tab-pill:hover, .tab-pill.active {
-      color: #fff;
-      border-color: var(--primary);
-      background: rgba(0, 229, 117, 0.1);
-    }
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    /* Tables */
-    .table-responsive {
-      overflow-x: auto;
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--surface-border);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 14.5px;
-    }
-    th, td {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--surface-border);
-    }
-    th {
+    .brand {
       font-family: var(--font-display);
-      color: var(--primary);
-      font-size: 13px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Header Center: Daily News / Blog Announcement Pill */
+    .header-news-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-glass);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      max-width: 480px;
+    }
+    .header-news-pill:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+    .news-badge {
+      background: rgba(233, 236, 238, 0.15);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
+      color: var(--text);
+    }
+    .news-ticker-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .nav-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-glass);
+      backdrop-filter: blur(14px);
+      letter-spacing: 0.04em;
+      transition: all 0.2s var(--ease);
+    }
+    .nav-btn:hover, .nav-btn.active {
+      border-color: var(--text);
+      color: #fff;
+    }
+    .audio-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .audio-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      width: 12px;
+      height: 12px;
+    }
+    .audio-bars span {
+      width: 2px;
+      background: var(--text);
+      height: 3px;
+      border-radius: 1px;
+    }
+    .audio-bars.playing span {
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+    .audio-bars.playing span:nth-child(2) { animation-delay: 0.2s; }
+    .audio-bars.playing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes soundWave {
+      0% { height: 2px; }
+      100% { height: 12px; }
+    }
+
+    /* ==============================================================
+       3. EXPLORABLE CANVAS MAP (OVERWORLD INTERFACE)
+       ============================================================== */
+    #viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+    #viewport:active { cursor: grabbing; }
+
+    #worldCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Hero headline overlay over the map */
+    .world-overlay {
+      position: absolute;
+      bottom: clamp(32px, 5vw, 60px);
+      left: clamp(20px, 4vw, 48px);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .world-overlay h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5.5vw, 76px);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .world-overlay p {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
       letter-spacing: 0.05em;
     }
-    tr:last-child td { border-bottom: none; }
+    .world-hint {
+      position: absolute;
+      bottom: clamp(32px, 5vw, 60px);
+      right: clamp(20px, 4vw, 48px);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    /* Gallery Grid */
-    .gallery-grid {
+    /* ==============================================================
+       4. SLIDE-OUT DRAWERS (STUDIO, PROJECT, NEWS, INSTA, CONTACT)
+       ============================================================== */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(640px, 100vw);
+      background: var(--bg-darker);
+      border-left: 1px solid var(--border);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.6s var(--ease);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header {
+      padding: 24px clamp(20px, 4vw, 40px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .drawer-body {
+      padding: clamp(24px, 4vw, 44px);
+      overflow-y: auto;
+      flex: 1;
+    }
+    .drawer-close {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+    .drawer-close:hover { border-color: var(--text); }
+
+    /* Content styling inside drawers */
+    .drawer-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+    .drawer-lead {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .meta-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+      margin-bottom: 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .meta-item b { display: block; color: var(--text); margin-top: 4px; font-size: 14px; }
+    .meta-item span { color: var(--text-muted); }
+
+    .service-block {
+      margin-bottom: 28px;
+    }
+    .service-block h4 {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .service-block p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Instagram Feed Grid inside drawer */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       margin-top: 24px;
     }
-    .gallery-item {
-      position: relative;
-      border-radius: 16px;
+    .insta-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
       overflow: hidden;
-      aspect-ratio: 4/3;
-      background: var(--surface-card);
-      border: 1px solid var(--surface-border);
-      cursor: pointer;
+      background: var(--surface);
+      transition: transform 0.3s var(--ease), border-color 0.3s;
+      display: block;
     }
-    .gallery-item img {
+    .insta-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+    .insta-card img {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 1;
       object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.06); }
-    .gallery-cap {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 14px;
-      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%);
-      font-size: 13px;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    /* Forms */
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .form-grid .full { grid-column: 1 / -1; }
-    .form-group label {
       display: block;
-      font-size: 13px;
-      font-weight: 700;
+    }
+    .insta-info {
+      padding: 12px 14px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .form-control {
-      width: 100%;
-      background: var(--surface-card);
-      border: 1px solid var(--surface-border);
-      border-radius: 14px;
-      color: #fff;
-      font-size: 15px;
-      font-family: inherit;
-      padding: 14px 18px;
-      transition: 0.25s;
-    }
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 16px var(--primary-glow);
-    }
-    textarea.form-control { min-height: 120px; resize: vertical; }
-
-    /* Footer */
-    footer {
-      background: #020604;
-      border-top: 1px solid var(--surface-border);
-      padding: 64px 0 32px 0;
-      margin-top: auto;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 48px;
-    }
-    .footer-col h4 {
-      font-size: 15px;
-      color: #fff;
-      margin-bottom: 18px;
-      font-weight: 700;
-    }
-    .footer-col a {
-      display: block;
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 10px;
-      transition: 0.2s;
-    }
-    .footer-col a:hover { color: var(--primary); }
-    .footer-bottom {
-      border-top: 1px solid var(--surface-border);
-      padding-top: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-      gap: 12px;
     }
 
-    /* Owner Admin Modal */
-    .admin-modal {
+    /* ==============================================================
+       5. OWNER ADMIN MODAL (EDIT NEWS, INSTAGRAM, CONTENT)
+       ============================================================== */
+    .admin-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
+      background: rgba(13, 14, 21, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 500;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
-    .admin-modal.active { display: flex; }
-    .admin-panel {
+    .admin-backdrop.active { display: flex; }
+    .admin-box {
       background: var(--surface);
-      border: 1px solid var(--primary);
-      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-hover);
+      border-radius: 20px;
       width: 100%;
-      max-width: 840px;
+      max-width: 720px;
       max-height: 85vh;
-      overflow-y: auto;
-      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
     }
+    .admin-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      gap: 12px;
+    }
+    .admin-tab {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .admin-tab.active {
+      color: #fff;
+      border-color: var(--text);
+      background: rgba(233, 236, 238, 0.1);
+    }
+    .admin-content {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--bg-darker);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--text);
+    }
+    textarea.form-input { min-height: 100px; resize: vertical; }
 
-    /* Responsive */
-    @media (max-width: 960px) {
-      .hero-grid, .game-play-area, .footer-grid { grid-template-columns: 1fr; }
-      .bins-container { grid-template-columns: 1fr; }
-      nav.nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        flex-direction: column;
-        padding: 24px;
-        border-bottom: 1px solid var(--surface-border);
-      }
-      nav.nav-links.active { display: flex; }
-      .menu-toggle { display: block; }
-      .form-grid { grid-template-columns: 1fr; }
+    @media (max-width: 800px) {
+      .header-news-pill { display: none; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .insta-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- ==============================================================
+       1. INITIAL SOUND GATE
+       ============================================================== -->
+  <div id="audioGate">
+    <div class="gate-top">
+      <span>OVERWORLD AUDIO</span>
+      <span>CO-DEVELOPMENT STUDIO</span>
+    </div>
+    <div class="gate-center">
+      <h1 class="gate-title">Building unforgettable sonic experiences.</h1>
+      <button class="gate-btn-main" onclick="enterExperience(true)">
+        <span class="brand-dot"></span>
+        <span>Enter with sound</span>
+      </button>
+      <button class="gate-btn-sub" onclick="enterExperience(false)">
+        Enter without sound
+      </button>
+    </div>
+    <div class="gate-top">
+      <span class="gate-progress">100% READY</span>
+      <span>SYSTEM WWISE / FABRIC</span>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       2. TOP BAR & NAVIGATION
+       ============================================================== -->
   <header>
-    <div class="container nav-wrap">
-      <a href="#home" class="brand-logo" onclick="navigateTo('home')">
-        <span class="dot"></span> Recompose
-      </a>
-      <nav class="nav-links" id="navMenu">
-        <a href="#home" class="active" onclick="navigateTo('home')">Home</a>
-        <a href="#about" onclick="navigateTo('about')">About Us</a>
-        <a href="#game" onclick="navigateTo('game')">Sort Challenge</a>
-        <a href="#services" onclick="navigateTo('services')">Services & EPR</a>
-        <a href="#gallery" onclick="navigateTo('gallery')">Projects</a>
-        <a href="#contact" onclick="navigateTo('contact')">Contact</a>
-      </nav>
-      <div class="nav-actions">
-        <a href="#pickup" class="btn btn-primary" onclick="navigateTo('pickup')">Schedule Pickup</a>
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
-      </div>
+    <a href="#" class="brand" onclick="resetView(); return false;">
+      <span class="brand-dot"></span>
+      <span>OVERWORLD</span>
+    </a>
+
+    <!-- Header News & Blog Pill -->
+    <div class="header-news-pill" id="headerNewsPill" onclick="openDrawer('news')">
+      <span class="news-badge" id="pillBadge">NEWS</span>
+      <span class="news-ticker-text" id="pillText">Loading announcement...</span>
+    </div>
+
+    <!-- Actions & Nav -->
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="openDrawer('studio')">STUDIO</button>
+      <button class="nav-btn" onclick="openDrawer('insta')">INSTAGRAM</button>
+      <button class="nav-btn" onclick="openDrawer('contact')">CONTACT</button>
+      <button class="nav-btn audio-toggle" id="audioToggleBtn" onclick="toggleMute()">
+        <span id="audioStateText">SOUND ON</span>
+        <div class="audio-bars" id="audioBars">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+      <button class="nav-btn" style="opacity: 0.6;" onclick="openAdmin()" title="Owner Content Manager">⚙ OWNER</button>
     </div>
   </header>
 
-  <main>
-    <!-- PAGE 1: HOME -->
-    <section class="page-section active" id="p-home">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <div class="badge">🌱 Circular Economy Solutions · Tamil Nadu</div>
-            <h1 class="hero-title">From Waste to <span>Value-Added</span> Resources.</h1>
-            <p class="hero-subtitle">
-              Recompose Recycling orchestrates end-to-end scientific disposal, non-metal recovery, multi-layered plastic transformation, and EPR compliance for forward-thinking industries and communities.
-            </p>
-            <div style="display:flex; gap:16px; flex-wrap:wrap;">
-              <a href="#pickup" class="btn btn-primary" onclick="navigateTo('pickup')">Request Commercial Collection</a>
-              <a href="#game" class="btn btn-outline" onclick="navigateTo('game')">Play Segregation Game ✦</a>
-            </div>
-            
-            <div class="hero-stats">
-              <div class="stat-box">
-                <b id="stat-diverted">2.25+</b>
-                <span>Tonnes Hill Waste Cleared</span>
-              </div>
-              <div class="stat-box">
-                <b>100%</b>
-                <span>Traceable SPCB Stream</span>
-              </div>
-              <div class="stat-box">
-                <b>Zero</b>
-                <span>Open Landfill Goal</span>
-              </div>
-            </div>
-          </div>
+  <!-- ==============================================================
+       3. INTERACTIVE WORLD CANVAS
+       ============================================================== -->
+  <div id="viewport">
+    <canvas id="worldCanvas"></canvas>
 
-          <!-- Dynamic Daily News Card (Owner Editable) -->
-          <div class="hero-news-card" id="heroNewsCard">
-            <span class="news-tag" id="newsTag">In The Spotlight</span>
-            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80" alt="News Image" class="news-preview-img" id="newsImg">
-            <h3 class="news-title" id="newsTitle">Vellingiri Hills: Multi-Layered Plastic Transformed into Paver Blocks</h3>
-            <p class="news-desc" id="newsText">In collaboration with the Forest Department, over 2.25 tonnes of pilgrim plastic waste was diverted into roofing and infrastructure materials.</p>
-            <div class="news-nav">
-              <span style="font-size: 13px; color: var(--text-muted);" id="newsDate">March 2025 · The Hindu</span>
-              <div class="news-dots" id="newsDots"></div>
-            </div>
-          </div>
-        </div>
+    <div class="world-overlay">
+      <h1>Explore our work.</h1>
+      <p>DRAG TO NAVIGATE MAP · CLICK MARKERS TO OPEN PROJECTS</p>
+    </div>
 
-        <!-- Pillar Grid -->
-        <div style="margin-top: 100px;">
-          <div class="section-head">
-            <h2>Pioneering Safe Material Recovery</h2>
-            <p>A closed-loop framework engineered to serve municipal corporations, industrial hubs, and bulk commercial generators.</p>
-          </div>
-          <div class="grid-cards">
-            <div class="card">
-              <div class="card-icon">♻</div>
-              <h3>Plastic & MLP Recycling</h3>
-              <p>Post-consumer multi-layered wrappers engineered into heavy-duty paver blocks, bus shelters, and high-tensile industrial sheets.</p>
-            </div>
-            <div class="card">
-              <div class="card-icon">📄</div>
-              <h3>Industrial Paper Scrap</h3>
-              <p>Segregated pulp processing for newspapers, office paper, and corrugated boxes ensuring circular paper re-entry.</p>
-            </div>
-            <div class="card">
-              <div class="card-icon">⚖</div>
-              <h3>EPR Advisory & Audit</h3>
-              <p>End-to-end alignment with CPCB targets, recycling credit procurement, quarterly filing, and State Board clearances.</p>
-            </div>
-            <div class="card">
-              <div class="card-icon">🚛</div>
-              <h3>Scheduled Logistics</h3>
-              <p>On-demand collection routes for colleges, tech parks, housing societies, and industrial factories across Coimbatore.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="world-hint">
+      <span class="brand-dot"></span>
+      <span>SCROLL / PAN WORLD COORDINATES</span>
+    </div>
+  </div>
 
-    <!-- PAGE 2: INTERACTIVE WASTE SEGREGATION GAME -->
-    <section class="page-section" id="p-game">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Gamified IEC Awareness</div>
-          <h2>Waste Segregation Master Challenge</h2>
-          <p>Drag each item into its scientifically compliant recycling or disposal bin. Accuracy builds circular economy habits.</p>
-        </div>
-
-        <div class="game-arena">
-          <div class="game-header">
-            <div>
-              <h3 style="font-size:20px; color:#fff;">Stage 1: Source Segregation</h3>
-              <p style="font-size:13px; color:var(--text-muted);">Pick or drag the item directly to the right bin</p>
-            </div>
-            <div class="game-stats">
-              <div class="game-stat-pill">Score: <span id="gameScore">0</span></div>
-              <div class="game-stat-pill">Streak: <span id="gameStreak">0</span> 🔥</div>
-            </div>
-          </div>
-
-          <div class="game-play-area">
-            <!-- Stage card -->
-            <div class="draggable-card-stage">
-              <div class="item-token" id="activeToken" draggable="true">
-                <span class="token-icon" id="tokenIcon">📦</span>
-                <span class="token-name" id="tokenName">Corrugated Box</span>
-                <span class="token-hint" id="tokenHint">Click or drag to appropriate bin</span>
-              </div>
-            </div>
-
-            <!-- Bin receptacles -->
-            <div class="bins-container">
-              <div class="bin-target" data-stream="paper">
-                <span class="bin-icon">📄</span>
-                <h4>Clean Paper & Cardboard</h4>
-                <p>Dry, unsoiled paper, boxes, and journals</p>
-              </div>
-              <div class="bin-target" data-stream="plastic">
-                <span class="bin-icon">🧴</span>
-                <h4>PET & Multi-Layered Plastic</h4>
-                <p>Bottles, food wrappers, MLP laminate</p>
-              </div>
-              <div class="bin-target" data-stream="glass">
-                <span class="bin-icon">🍾</span>
-                <h4>Glass Bottles & Jars</h4>
-                <p>Rinsed glass jars and beverage containers</p>
-              </div>
-              <div class="bin-target" data-stream="reject">
-                <span class="bin-icon">⚠️</span>
-                <h4>Scientific Hazardous / Residue</h4>
-                <p>Contaminated items, e-waste, chemical soiled</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="game-feedback" id="gameFeedback"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 3: ABOUT US -->
-    <section class="page-section" id="p-about">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Our Pedigree</div>
-          <h2>Engineering Sustainable Regeneration</h2>
-          <p>Incorporated on 1 June 2020 in Coimbatore, Recompose Recycling Private Limited bridges source segregation with scientific recycling infrastructure.</p>
-        </div>
-
-        <div class="grid-cards" style="margin-bottom: 60px;">
-          <div class="card">
-            <h3>Registered Details</h3>
-            <p style="margin-top:12px;"><strong>CIN:</strong> U37200TZ2020PTC033845</p>
-            <p><strong>ROC:</strong> Coimbatore, Tamil Nadu</p>
-            <p><strong>Activity:</strong> Non-Metal Waste & Scrap Recovery</p>
-            <p><strong>Registered Office:</strong> Muthalipalayam, Arasur, Coimbatore - 641407</p>
-          </div>
-          <div class="card">
-            <h3>Scientific Stewardship</h3>
-            <p>We work in direct consultation with the Central Pollution Control Board (CPCB) and Tamil Nadu Pollution Control Board (TNPCB) frameworks to eliminate illegitimate dumping and unauthorized incineration.</p>
-          </div>
-          <div class="card">
-            <h3>Material Value Adding</h3>
-            <p>Rather than treating scrap as low-grade refuse, our technical processes re-engineer multi-layered polymers into permanent architectural assets including public transit stops and commercial tiles.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 4: SERVICES & EPR -->
-    <section class="page-section" id="p-services">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Compliance & Logistics</div>
-          <h2>EPR Regimes & Industrial Capabilities</h2>
-          <p>Navigating Environmental Compensation, CPCB transaction audits, and dedicated industrial pickup pipelines.</p>
-        </div>
-
-        <div class="tabs-nav">
-          <button class="tab-pill active" onclick="switchTab(0)">Plastic Packaging (PWM)</button>
-          <button class="tab-pill" onclick="switchTab(1)">Filing & Due Dates</button>
-          <button class="tab-pill" onclick="switchTab(2)">Authorisation Checklist</button>
-        </div>
-
-        <div class="tab-pane active" id="tab-0">
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Stream</th>
-                  <th>Governing Rules</th>
-                  <th>Applicability</th>
-                  <th>Outcome</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><b>Plastic Packaging (Cat I-IV)</b></td>
-                  <td>PWM Rules 2016, Sched II</td>
-                  <td>Producers, Importers & Brand Owners</td>
-                  <td>Recycling credits & certificate redemption</td>
-                </tr>
-                <tr>
-                  <td><b>Multi-Layered Plastic (MLP)</b></td>
-                  <td>PWM Amendment Guidelines</td>
-                  <td>FMCG, Food & Beverage Packaging</td>
-                  <td>Paver block & sheet composite transformation</td>
-                </tr>
-                <tr>
-                  <td><b>Non-Metal Discard</b></td>
-                  <td>Solid Waste Management Rules</td>
-                  <td>Educational & Commercial campuses</td>
-                  <td>100% landfill diversion audit report</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="tab-pane" id="tab-1">
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Waste Category</th>
-                  <th>Reporting Frequency</th>
-                  <th>Statutory Deadline</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Plastic Packaging (PIBOs)</td>
-                  <td>Annual Portal Return</td>
-                  <td>30th June</td>
-                </tr>
-                <tr>
-                  <td>E-Waste Management</td>
-                  <td>Quarterly & Annual</td>
-                  <td>End of following month</td>
-                </tr>
-                <tr>
-                  <td>Battery Waste Returns</td>
-                  <td>Half-Yearly & Annual</td>
-                  <td>30th November & 30th June</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="tab-pane" id="tab-2">
-          <div class="card" style="margin-top:20px;">
-            <h3>Mandatory Consent Documentation</h3>
-            <ul style="margin: 16px 0 0 20px; color: var(--text-muted); line-height: 1.8;">
-              <li>Consent to Establish (CTE) & Consent to Operate (CTO) from TNPCB</li>
-              <li>Centralised EPR Portal Registration ID for PIBO entities</li>
-              <li>Plastic Waste Processing Authorization (Form II)</li>
-              <li>Consolidated Manifest System for Industrial Consignments</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 5: GALLERY & PROJECTS -->
-    <section class="page-section" id="p-gallery">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Visual Proof</div>
-          <h2>Circular Milestones in Action</h2>
-          <p>Real images from our ground drives, institutional partnerships, and material recovery runs.</p>
-        </div>
-
-        <div class="gallery-grid" id="projectGallery">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 6: SCHEDULE PICKUP -->
-    <section class="page-section" id="p-pickup">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Rapid Logistics</div>
-          <h2>Schedule a Collection or Drop-Off</h2>
-          <p>Submit your quantity and stream details. We verify and dispatch collection routes across Coimbatore.</p>
-        </div>
-
-        <div style="max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 44px);">
-          <form id="pickupForm" class="form-grid">
-            <div class="form-group">
-              <label>Authorized Contact Person</label>
-              <input type="text" class="form-control" name="Name" required placeholder="e.g. Ramesh Kumar">
-            </div>
-            <div class="form-group">
-              <label>Phone / WhatsApp</label>
-              <input type="tel" class="form-control" name="Phone" required placeholder="+91 98765 43210">
-            </div>
-            <div class="form-group">
-              <label>Entity Category</label>
-              <select class="form-control" name="Entity">
-                <option>Commercial Facility / Office</option>
-                <option>Manufacturing Industry</option>
-                <option>School / College Campus</option>
-                <option>Gated Residential Community</option>
-                <option>Individual Household</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Primary Material Stream</label>
-              <select class="form-control" name="Stream">
-                <option>Multi-Layered Plastic (MLP)</option>
-                <option>PET & High Density Polymers</option>
-                <option>Old Paper / Cardboard Carton Waste</option>
-                <option>Glass Bottles & Container Cullet</option>
-                <option>Mixed Dry Scrap Consignment</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Estimated Weight (KG or Tonnes)</label>
-              <input type="text" class="form-control" name="Weight" placeholder="e.g. 250 KG">
-            </div>
-            <div class="form-group">
-              <label>Locality / Pickup Hub</label>
-              <input type="text" class="form-control" name="Location" placeholder="e.g. Saravanampatti, Coimbatore" required>
-            </div>
-            <div class="form-group full">
-              <label>Specific Handling Notes</label>
-              <textarea class="form-control" name="Notes" placeholder="Access timing, loading dock availability, or packing state..."></textarea>
-            </div>
-            <div class="form-group full" style="display:flex; gap:12px; align-items:center; margin-top:8px;">
-              <button type="submit" class="btn btn-primary">Dispatch Request via WhatsApp</button>
-              <button type="button" class="btn btn-outline" id="emailSubmitBtn">Submit via Email</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 7: CONTACT -->
-    <section class="page-section" id="p-contact">
-      <div class="container">
-        <div class="section-head">
-          <div class="badge">Direct Connect</div>
-          <h2>Partner with Recompose</h2>
-          <p>We are based out of Arasur, Coimbatore. Reach out directly for institutional tie-ups and EPR advisory.</p>
-        </div>
-
-        <div class="grid-cards" style="max-width: 900px; margin: 0 auto;">
-          <div class="card">
-            <h3>Operational Facility</h3>
-            <p style="margin-top:12px;">1/235, Bhagiyalakshmi Nagar, Muthalipalayam, Arasur Post, Coimbatore, Tamil Nadu 641407</p>
-            <p style="margin-top:16px;"><strong>Email:</strong> <span id="contactEmail">recomposecbe@gmail.com</span></p>
-            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/recomposerecycling" target="_blank" style="color:var(--primary);">@recomposerecycling</a></p>
-          </div>
-          <div class="card">
-            <h3>Quick Enquiry</h3>
-            <form id="quickContact" style="display:flex; flex-direction:column; gap:12px;">
-              <input type="text" class="form-control" placeholder="Your Name" required>
-              <input type="text" class="form-control" placeholder="Phone or Email" required>
-              <textarea class="form-control" placeholder="Message" style="min-height:90px;" required></textarea>
-              <button class="btn btn-primary" type="submit">Send Message</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Client Admin Portal (Owner login) -->
-  <div class="admin-modal" id="adminModal">
-    <div class="admin-panel">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h3 style="font-size:22px; color:#fff;">Admin & News Manager</h3>
-        <button class="btn btn-outline" style="padding:6px 14px;" onclick="closeAdmin()">Close</button>
+  <!-- ==============================================================
+       4. SLIDE-OUT DRAWERS
+       ============================================================== -->
+  <!-- PROJECT DRAWER -->
+  <div class="drawer" id="drawerProject">
+    <div class="drawer-header">
+      <span id="projClientCategory">FEATURED PROJECT</span>
+      <button class="drawer-close" onclick="closeDrawers()">CLOSE ✕</button>
+    </div>
+    <div class="drawer-body">
+      <h2 class="drawer-title" id="projTitle">Towers</h2>
+      <p class="drawer-lead" id="projDesc">An open-world building and ecosystem game from Dreamlit.</p>
+      
+      <div class="meta-grid">
+        <div class="meta-item"><span>YEAR</span><b id="projYear">2024</b></div>
+        <div class="meta-item"><span>CLIENT</span><b id="projClient">Dreamlit Inc.</b></div>
+        <div class="meta-item"><span>SCOPE</span><b id="projScope">Full Audio Pipeline</b></div>
+        <div class="meta-item"><span>TECH</span><b id="projTech">Wwise + Unreal Engine</b></div>
       </div>
 
-      <div class="tabs-nav">
-        <button class="tab-pill active" id="adm-tab-news" onclick="switchAdminTab('news')">Header News</button>
-        <button class="tab-pill" id="adm-tab-gallery" onclick="switchAdminTab('gallery')">Project Photos</button>
-        <button class="tab-pill" id="adm-tab-stats" onclick="switchAdminTab('stats')">Live Metrics</button>
+      <div class="service-block">
+        <h4>AUDIO DESIGN HIGHLIGHTS</h4>
+        <p id="projDetails">Custom procedural wind models, modular creature vocalizations, physicalized stone impact synthesis, and interactive dynamic musical layers shifting with ecosystem fertility.</p>
       </div>
 
-      <!-- Admin News Form -->
-      <div id="admSecNews">
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>News Headline</label>
-          <input type="text" id="admNewsTitle" class="form-control">
-        </div>
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>News Description</label>
-          <textarea id="admNewsText" class="form-control"></textarea>
-        </div>
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>Date & Source</label>
-          <input type="text" id="admNewsDate" class="form-control" placeholder="e.g. October 2026 · Coimbatore Times">
-        </div>
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>Upload Banner Graphic (Instant Compression)</label>
-          <input type="file" id="admNewsFile" accept="image/*" class="form-control">
-        </div>
-        <button class="btn btn-primary" onclick="saveAdminNews()">Update Daily News</button>
+      <button class="gate-btn-main" style="width: 100%; justify-content: center; margin-top: 12px;" onclick="playProjectTone()">
+        ▶ Preview Sonic Signature
+      </button>
+    </div>
+  </div>
+
+  <!-- STUDIO DRAWER -->
+  <div class="drawer" id="drawerStudio">
+    <div class="drawer-header">
+      <span>STUDIO ARCHITECTURE</span>
+      <button class="drawer-close" onclick="closeDrawers()">CLOSE ✕</button>
+    </div>
+    <div class="drawer-body">
+      <h2 class="drawer-title">Great audio is more than great sounds.</h2>
+      <p class="drawer-lead">
+        Audio only feels good when the systems behind it work. We put as much care into how audio plays back as into the audio itself, and we're happy to own all of it from the first sound to the final mix.
+      </p>
+
+      <div class="service-block">
+        <h4>01 · SOUND DESIGN</h4>
+        <p>Sound can help sell a story, give clarity to design, and bring worlds to life. It’s the craft we’ve built our careers around, and we strive for its absolute perfection.</p>
       </div>
 
-      <!-- Admin Gallery Form -->
-      <div id="admSecGallery" style="display:none;">
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>Project Title / Caption</label>
-          <input type="text" id="admGalCap" class="form-control">
-        </div>
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>Add Project Photo</label>
-          <input type="file" id="admGalFile" accept="image/*" class="form-control">
-        </div>
-        <button class="btn btn-primary" onclick="addAdminGallery()">Add to Project Gallery</button>
+      <div class="service-block">
+        <h4>02 · MUSIC & SCORING</h4>
+        <p>We write music that not only imparts a sense of quality and polish, but helps deliver the emotional impact your project requires — driving your direction or delivering on a specific artistic vision.</p>
       </div>
 
-      <!-- Admin Stats Form -->
-      <div id="admSecStats" style="display:none;">
-        <div class="form-group full" style="margin-bottom:14px;">
-          <label>Hero Metric Number (e.g. 2.25+ Tonnes)</label>
-          <input type="text" id="admStatInput" class="form-control">
-        </div>
-        <button class="btn btn-primary" onclick="saveAdminStats()">Save Metric</button>
+      <div class="service-block">
+        <h4>03 · WWISE & SYSTEM IMPLEMENTATION</h4>
+        <p>We refuse to toss assets over the fence. We own all elements of our work from start to finish, including Wwise audio system design and in-game mixing.</p>
       </div>
 
-      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--surface-border); display:flex; gap:12px;">
-        <button class="btn btn-outline" onclick="exportDataBackup()">Backup JSON</button>
-        <button class="btn btn-outline" onclick="resetDefaultData()">Reset Defaults</button>
+      <div class="service-block">
+        <h4>04 · AUDIO DIRECTION</h4>
+        <p>We think years ahead, designing audio pipelines for scalability and sustainability. Strategic leadership across the entire pipeline — from concept through ship.</p>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="#home" class="brand-logo" style="margin-bottom:14px;">
-            <span class="dot"></span> Recompose
-          </a>
-          <p style="color:var(--text-muted); font-size:14px; max-width:320px;">
-            Scientific non-metal scrap management, EPR enablement, and valorization of challenging polymer waste streams in Coimbatore.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <a href="#home" onclick="navigateTo('home')">Home</a>
-          <a href="#about" onclick="navigateTo('about')">About Us</a>
-          <a href="#game" onclick="navigateTo('game')">Segregation Game</a>
-          <a href="#services" onclick="navigateTo('services')">Services & EPR</a>
-        </div>
-        <div class="footer-col">
-          <h4>Statutory</h4>
-          <a href="#about" onclick="navigateTo('about')">CIN Registration</a>
-          <a href="#services" onclick="navigateTo('services')">CPCB & SPCB Framework</a>
-          <a href="#contact" onclick="navigateTo('contact')">Waste Acceptance Policy</a>
-        </div>
-        <div class="footer-col">
-          <h4>Direct</h4>
-          <p style="color:var(--text-muted); font-size:14px; margin-bottom:8px;">Arasur, Coimbatore 641407</p>
-          <a href="mailto:recomposecbe@gmail.com">recomposecbe@gmail.com</a>
-          <a href="https://wa.me/919999999999" target="_blank" style="color:var(--primary); font-weight:700;">+ WhatsApp Desk</a>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 Recompose Recycling Private Limited. All Rights Reserved.</span>
-        <div>
-          <button style="color:var(--text-muted); font-size:12px;" onclick="openAdmin()">Owner Access</button>
-        </div>
+  <!-- INSTAGRAM DRAWER -->
+  <div class="drawer" id="drawerInsta">
+    <div class="drawer-header">
+      <span>@OVERWORLDAUDIO</span>
+      <button class="drawer-close" onclick="closeDrawers()">CLOSE ✕</button>
+    </div>
+    <div class="drawer-body">
+      <h2 class="drawer-title">Studio Feed.</h2>
+      <p class="drawer-lead">Synthesizer patch explorations, field recording expeditions, and trailer reels.</p>
+      
+      <div class="insta-grid" id="instaContainer">
+        <!-- Rendered dynamically -->
       </div>
     </div>
-  </footer>
+  </div>
 
+  <!-- NEWS & BLOG DRAWER -->
+  <div class="drawer" id="drawerNews">
+    <div class="drawer-header">
+      <span>STUDIO JOURNAL & PRESS</span>
+      <button class="drawer-close" onclick="closeDrawers()">CLOSE ✕</button>
+    </div>
+    <div class="drawer-body">
+      <span class="news-badge" id="newsDrawerBadge" style="margin-bottom: 12px; display: inline-block;">LATEST DISPATCH</span>
+      <h2 class="drawer-title" id="newsDrawerTitle">Audio Post-Mortem: Spatial acoustics in interactive ecosystems</h2>
+      <p class="drawer-lead" id="newsDrawerText">A technical breakdown of our custom attenuation curve systems and granular reverb convolution for open-world gaming engines.</p>
+      
+      <div class="meta-grid">
+        <div class="meta-item"><span>PUBLISHED</span><b id="newsDrawerDate">October 2026</b></div>
+        <div class="meta-item"><span>AUTHOR</span><b>Overworld Technical Team</b></div>
+      </div>
+
+      <div class="service-block">
+        <h4>READ THE COMPLETE BREAKDOWN</h4>
+        <p id="newsDrawerBody">We break down our production approaches, runtime memory budgeting in Wwise, and why procedural Foley triggers offer 4x higher realism without bloat.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT DRAWER -->
+  <div class="drawer" id="drawerContact">
+    <div class="drawer-header">
+      <span>TRANSMISSION</span>
+      <button class="drawer-close" onclick="closeDrawers()">CLOSE ✕</button>
+    </div>
+    <div class="drawer-body">
+      <h2 class="drawer-title">Get in touch.</h2>
+      <p class="drawer-lead">
+        We'd love to hear about your game. We set the bar high, and we work best with teams who do the same.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span>DIRECT EMAIL</span><b>hello@overworldaudio.com</b></div>
+        <div class="meta-item"><span>STUDIO BASE</span><b>North America & Europe</b></div>
+      </div>
+
+      <div style="margin-top: 32px;">
+        <a class="gate-btn-main" href="mailto:hello@overworldaudio.com" style="width: 100%; justify-content: center;">
+          Initiate Project Brief →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       5. OWNER CONTENT MANAGER MODAL
+       ============================================================== -->
+  <div class="admin-backdrop" id="adminModal">
+    <div class="admin-box">
+      <div class="admin-nav">
+        <button class="admin-tab active" onclick="switchAdminTab('news')">Header News & Blog</button>
+        <button class="admin-tab" onclick="switchAdminTab('insta')">Instagram Feed</button>
+        <button class="admin-tab" onclick="switchAdminTab('export')">Backup & Sync</button>
+        <button style="margin-left:auto; font-family:var(--font-mono); font-size:12px;" onclick="closeAdmin()">✕</button>
+      </div>
+
+      <div class="admin-content" id="admSecNews">
+        <div class="form-group">
+          <label>Header Badge (e.g. NEWS, RELEASE, GDC)</label>
+          <input type="text" id="admBadge" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Header Ticker Headline</label>
+          <input type="text" id="admHeadline" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Full Blog / News Description</label>
+          <textarea id="admFullText" class="form-input"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Publish Date / Tag</label>
+          <input type="text" id="admDate" class="form-input">
+        </div>
+        <button class="gate-btn-main" onclick="saveNewsData()">Save Daily Announcement</button>
+      </div>
+
+      <div class="admin-content" id="admSecInsta" style="display:none;">
+        <div class="form-group">
+          <label>Add Instagram Post Caption</label>
+          <input type="text" id="admInstaCap" class="form-input" placeholder="e.g. Modular synthesizer patching for upcoming title">
+        </div>
+        <div class="form-group">
+          <label>Upload Post Graphic</label>
+          <input type="file" id="admInstaFile" accept="image/*" class="form-input">
+        </div>
+        <button class="gate-btn-main" onclick="addInstaPost()">Add to Instagram Feed</button>
+      </div>
+
+      <div class="admin-content" id="admSecExport" style="display:none;">
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          All updates save automatically to your local browser storage. Export a JSON file to transfer changes to any other machine or permanent repo.
+        </p>
+        <button class="gate-btn-main" onclick="exportData()">Download Backup JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       6. CORE JAVASCRIPT: WEB AUDIO SYNTHESIS + 2D PROCEDURAL MAP
+       ============================================================== -->
   <script>
-    /* ==========================================
-       PERSISTENT STATE & DATA CONFIG
-       ========================================== */
-    const OWNER_PIN = "1234";
-
+    /* -------------------------------------------------------------
+       A. DATA STORE (STORED IN LOCALSTORAGE FOR PERSISTENCE)
+       ------------------------------------------------------------- */
     const DEFAULT_STORE = {
       news: {
-        title: "Vellingiri Hills: Multi-Layered Plastic Transformed into Paver Blocks",
-        text: "In collaboration with the Forest Department, over 2.25 tonnes of pilgrim plastic waste was diverted into roofing and infrastructure materials.",
-        date: "March 2025 · The Hindu",
-        tag: "In The Spotlight",
-        img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80"
+        badge: "PRESS",
+        headline: "Overworld honored as Site of the Day on Awwwards & CSS Winners",
+        body: "Our interactive world map and procedural sonic portfolio has been awarded Site of the Day. Thank you to our partner game studios and engineering teams.",
+        date: "October 2026"
       },
-      stat: "2.25+",
-      gallery: [
-        { cap: "Multi-layered plastic collection drive at Vellingiri Foothills", img: "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=600&q=80" },
-        { cap: "Segregation and density baling at processing unit", img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" },
-        { cap: "Composite roofing and paver sheet fabrication", img: "https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?auto=format&fit=crop&w=600&q=80" }
+      insta: [
+        {
+          img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=600&q=80",
+          caption: "Custom Eurorack generative patch session for sci-fi atmosphere."
+        },
+        {
+          img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+          caption: "Foley resonance testing with titanium resonators in studio B."
+        },
+        {
+          img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80",
+          caption: "Live acoustic strings layering for main theme orchestral suite."
+        },
+        {
+          img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+          caption: "Wwise dynamic RTPC routing for runtime interactive mix."
+        }
       ]
     };
 
-    let APP_STATE = JSON.parse(localStorage.getItem('recompose_greensutra_db')) || DEFAULT_STORE;
+    let APP_STATE = JSON.parse(localStorage.getItem('overworld_db')) || DEFAULT_STORE;
 
     function saveState() {
-      localStorage.setItem('recompose_greensutra_db', JSON.stringify(APP_STATE));
-      renderUI();
+      localStorage.setItem('overworld_db', JSON.stringify(APP_STATE));
+      renderHeaderAndDrawers();
     }
 
-    function renderUI() {
-      document.getElementById('newsTitle').textContent = APP_STATE.news.title;
-      document.getElementById('newsText').textContent = APP_STATE.news.text;
-      document.getElementById('newsDate').textContent = APP_STATE.news.date;
-      document.getElementById('newsImg').src = APP_STATE.news.img;
-      document.getElementById('stat-diverted').textContent = APP_STATE.stat;
+    function renderHeaderAndDrawers() {
+      // Header News
+      document.getElementById('pillBadge').textContent = APP_STATE.news.badge;
+      document.getElementById('pillText').textContent = APP_STATE.news.headline;
+      document.getElementById('newsDrawerBadge').textContent = APP_STATE.news.badge;
+      document.getElementById('newsDrawerTitle').textContent = APP_STATE.news.headline;
+      document.getElementById('newsDrawerText').textContent = APP_STATE.news.body;
+      document.getElementById('newsDrawerDate').textContent = APP_STATE.news.date;
 
-      const galContainer = document.getElementById('projectGallery');
-      galContainer.innerHTML = APP_STATE.gallery.map(item => `
-        <div class="gallery-item">
-          <img src="${item.img}" alt="${item.cap}">
-          <div class="gallery-cap">${item.cap}</div>
+      // Instagram cards
+      const instaBox = document.getElementById('instaContainer');
+      instaBox.innerHTML = APP_STATE.insta.map(item => `
+        <div class="insta-card">
+          <img src="${item.img}" alt="Instagram">
+          <div class="insta-info">${item.caption}</div>
         </div>
       `).join('');
     }
 
-    /* ==========================================
-       ROUTER & NAVIGATION
-       ========================================== */
-    function navigateTo(pageId) {
-      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-      const target = document.getElementById('p-' + pageId);
-      if (target) {
-        target.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    /* -------------------------------------------------------------
+       B. WEB AUDIO ENGINE (REAL AMBIENCE SYNTHESIS)
+       ------------------------------------------------------------- */
+    let audioCtx = null;
+    let isMuted = false;
+    let ambientGain = null;
+
+    function initWebAudio() {
+      if (audioCtx) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+
+      // Create dual warm oscillator drone for signature Overworld atmosphere
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const filter = audioCtx.createBiquadFilter();
+      ambientGain = audioCtx.createGain();
+
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(55, audioCtx.currentTime); // A1 note
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(110, audioCtx.currentTime); // A2 harmonic
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(240, audioCtx.currentTime);
+
+      ambientGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(ambientGain);
+      ambientGain.connect(audioCtx.destination);
+
+      osc1.start();
+      osc2.start();
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.5) {
+      if (!audioCtx || isMuted) return;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      g.gain.setValueAtTime(0.09, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playProjectTone() {
+      playTone(440, 'triangle', 0.8);
+      setTimeout(() => playTone(659.25, 'sine', 1.2), 150);
+    }
+
+    function enterExperience(withAudio) {
+      if (withAudio) {
+        initWebAudio();
+        document.getElementById('audioBars').classList.add('playing');
+        document.getElementById('audioStateText').textContent = 'SOUND ON';
+        playTone(330, 'sine', 1.0);
+      } else {
+        isMuted = true;
+        document.getElementById('audioBars').classList.remove('playing');
+        document.getElementById('audioStateText').textContent = 'SOUND OFF';
       }
-      document.querySelectorAll('#navMenu a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + pageId);
-      });
-      document.getElementById('navMenu').classList.remove('active');
+      document.getElementById('audioGate').classList.add('hidden');
     }
 
-    window.addEventListener('hashchange', () => {
-      const page = location.hash.replace('#', '') || 'home';
-      navigateTo(page);
-    });
-
-    document.getElementById('menuToggle').onclick = () => {
-      document.getElementById('navMenu').classList.toggle('active');
-    };
-
-    /* ==========================================
-       TABS SWITCHER (EPR REGIMES)
-       ========================================== */
-    function switchTab(index) {
-      document.querySelectorAll('.tabs-nav .tab-pill').forEach((btn, i) => {
-        btn.classList.toggle('active', i === index);
-      });
-      document.querySelectorAll('.tab-pane').forEach((p, i) => {
-        p.classList.toggle('active', i === index);
-      });
+    function toggleMute() {
+      if (!audioCtx) initWebAudio();
+      isMuted = !isMuted;
+      if (isMuted) {
+        if (ambientGain) ambientGain.gain.setValueAtTime(0, audioCtx.currentTime);
+        document.getElementById('audioBars').classList.remove('playing');
+        document.getElementById('audioStateText').textContent = 'SOUND OFF';
+      } else {
+        if (ambientGain) ambientGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        document.getElementById('audioBars').classList.add('playing');
+        document.getElementById('audioStateText').textContent = 'SOUND ON';
+        playTone(550, 'sine', 0.4);
+      }
     }
 
-    /* ==========================================
-       INTERACTIVE WASTE SEGREGATION GAMEPLAY
-       ========================================== */
-    const GAME_ITEMS = [
-      { name: "Corrugated Cardboard Box", stream: "paper", icon: "📦", hint: "Clean dry packaging fiber" },
-      { name: "Empty PET Water Bottle", stream: "plastic", icon: "🍶", hint: "Crushed transparent polymer" },
-      { name: "Biscuit / Chips Foil Packet", stream: "plastic", icon: "🍫", hint: "Multi-layered foil (MLP)" },
-      { name: "Glass Jam Jar", stream: "glass", icon: "🫙", hint: "Inert container glass" },
-      { name: "Broken Fluorescent Tube", stream: "reject", icon: "💡", hint: "Hazardous phosphor discard" },
-      { name: "Used Office A4 Documents", stream: "paper", icon: "📄", hint: "Clean non-confidential sheets" },
-      { name: "Chemical Disinfectant Bottle", stream: "reject", icon: "☣️", hint: "Toxic residual packaging" }
+    /* -------------------------------------------------------------
+       C. PROCEDURAL WORLD MAP & CANVAS (OVERWORLD MAP SYSTEM)
+       ------------------------------------------------------------- */
+    const canvas = document.getElementById('worldCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const PROJECTS = [
+      { id: 'towers', title: 'Towers', client: 'Dreamlit Inc.', year: '2024', x: -300, y: -180, desc: 'An open-world building and ecosystem adventure.', tech: 'Wwise + Unreal 5' },
+      { id: 'unrooted', title: 'Unrooted', client: 'Independent', year: '2023', x: 260, y: -220, desc: 'Atmospheric puzzle game with generative biomes.', tech: 'Custom Audio Engine' },
+      { id: 'alekon', title: 'Alekon', client: 'The Alekon Company', year: '2021', x: -180, y: 220, desc: 'Whimsical first-person creature photography title.', tech: 'FMOD + Unity' },
+      { id: 'multiversus', title: 'MultiVersus', client: 'Player First Games', year: '2024', x: 380, y: 160, desc: 'Platform fighter featuring iconic Warner Bros IP.', tech: 'Wwise + In-Game Mix' },
+      { id: 'jedi', title: 'Star Wars Jedi: Fallen Order', client: 'Respawn / EA', year: '2019', x: 20, y: 280, desc: 'Cinematic lightsaber Foley and creature audio design.', tech: 'Custom Proprietary' }
     ];
 
-    let currentItemIndex = 0;
-    let score = 0;
-    let streak = 0;
+    let camera = { x: 0, y: 0, zoom: 1 };
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let hoveredProject = null;
 
-    function loadGameItem() {
-      const item = GAME_ITEMS[currentItemIndex];
-      document.getElementById('tokenName').textContent = item.name;
-      document.getElementById('tokenIcon').textContent = item.icon;
-      document.getElementById('tokenHint').textContent = item.hint;
-      document.getElementById('activeToken').dataset.stream = item.stream;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    function checkAnswer(chosenStream) {
-      const correctStream = GAME_ITEMS[currentItemIndex].stream;
-      const feedback = document.getElementById('gameFeedback');
+    function renderWorld() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (chosenStream === correctStream) {
-        score += 10 + (streak * 2);
-        streak++;
-        feedback.className = "game-feedback success";
-        feedback.textContent = `✓ Correct! Diverted cleanly into circular processing.`;
-      } else {
-        streak = 0;
-        feedback.className = "game-feedback error";
-        feedback.textContent = `✗ Incorrect stream. Causes cross-contamination in batch recycling.`;
+      ctx.save();
+      ctx.translate(canvas.width / 2 + camera.x, canvas.height / 2 + camera.y);
+
+      // Draw subtle topographic cosmic grid
+      ctx.strokeStyle = 'rgba(233, 236, 238, 0.04)';
+      ctx.lineWidth = 1;
+      const gridSize = 120;
+      const range = 2400;
+
+      for (let x = -range; x <= range; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, -range);
+        ctx.lineTo(x, range);
+        ctx.stroke();
+      }
+      for (let y = -range; y <= range; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(-range, y);
+        ctx.lineTo(range, y);
+        ctx.stroke();
       }
 
-      document.getElementById('gameScore').textContent = score;
-      document.getElementById('gameStreak').textContent = streak;
+      // Draw constellation interconnection lines
+      ctx.strokeStyle = 'rgba(233, 236, 238, 0.15)';
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      PROJECTS.forEach((p, idx) => {
+        if (idx === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+      ctx.stroke();
+      ctx.setLineDash([]);
 
-      currentItemIndex = (currentItemIndex + 1) % GAME_ITEMS.length;
-      setTimeout(() => {
-        loadGameItem();
-      }, 700);
+      // Draw projects nodes
+      const time = Date.now() * 0.002;
+
+      PROJECTS.forEach(proj => {
+        const isHovered = (hoveredProject === proj);
+
+        // Pulsing rings
+        ctx.strokeStyle = isHovered ? 'rgba(233, 236, 238, 0.8)' : 'rgba(233, 236, 238, 0.2)';
+        ctx.lineWidth = 1.5;
+        const pulse = Math.sin(time + proj.x) * 4;
+        ctx.beginPath();
+        ctx.arc(proj.x, proj.y, 22 + pulse, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Node center
+        ctx.fillStyle = isHovered ? '#ffffff' : '#1a1c28';
+        ctx.beginPath();
+        ctx.arc(proj.x, proj.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#e9ecee';
+        ctx.stroke();
+
+        // Label
+        ctx.font = '600 13px Inter';
+        ctx.fillStyle = isHovered ? '#ffffff' : '#8d919d';
+        ctx.fillText(proj.title, proj.x + 28, proj.y - 2);
+
+        ctx.font = '400 11px JetBrains Mono';
+        ctx.fillStyle = 'rgba(233, 236, 238, 0.45)';
+        ctx.fillText(`${proj.year} · ${proj.client}`, proj.x + 28, proj.y + 16);
+      });
+
+      ctx.restore();
+      requestAnimationFrame(renderWorld);
+    }
+    requestAnimationFrame(renderWorld);
+
+    // Pan & Drag Handlers
+    const viewport = document.getElementById('viewport');
+
+    viewport.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStart.x = e.clientX - camera.x;
+      dragStart.y = e.clientY - camera.y;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        camera.x = e.clientX - dragStart.x;
+        camera.y = e.clientY - dragStart.y;
+      }
+
+      // Check hover on markers
+      const mouseWorldX = e.clientX - (canvas.width / 2 + camera.x);
+      const mouseWorldY = e.clientY - (canvas.height / 2 + camera.y);
+
+      let found = null;
+      PROJECTS.forEach(p => {
+        const dist = Math.hypot(p.x - mouseWorldX, p.y - mouseWorldY);
+        if (dist < 32) found = p;
+      });
+
+      if (found !== hoveredProject) {
+        hoveredProject = found;
+        if (hoveredProject) playTone(780, 'sine', 0.1);
+      }
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Touch support for mobile panning
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        dragStart.x = e.touches[0].clientX - camera.x;
+        dragStart.y = e.touches[0].clientY - camera.y;
+      }
+    });
+    window.addEventListener('touchmove', (e) => {
+      if (isDragging && e.touches.length === 1) {
+        camera.x = e.touches[0].clientX - dragStart.x;
+        camera.y = e.touches[0].clientY - dragStart.y;
+      }
+    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    // Click marker to inspect project
+    viewport.addEventListener('click', () => {
+      if (hoveredProject) {
+        openProjectDrawer(hoveredProject);
+      }
+    });
+
+    function resetView() {
+      camera = { x: 0, y: 0, zoom: 1 };
+      closeDrawers();
     }
 
-    // Drag & Drop Listeners
-    const token = document.getElementById('activeToken');
-    token.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', token.dataset.stream);
-    });
+    /* -------------------------------------------------------------
+       D. DRAWERS INTERACTION
+       ------------------------------------------------------------- */
+    function closeDrawers() {
+      document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+    }
 
-    document.querySelectorAll('.bin-target').forEach(bin => {
-      bin.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        bin.classList.add('drag-over');
-      });
-      bin.addEventListener('dragleave', () => {
-        bin.classList.remove('drag-over');
-      });
-      bin.addEventListener('drop', (e) => {
-        e.preventDefault();
-        bin.classList.remove('drag-over');
-        checkAnswer(bin.dataset.stream);
-      });
-      // Click fallback for mobile users
-      bin.addEventListener('click', () => {
-        checkAnswer(bin.dataset.stream);
-      });
-    });
+    function openDrawer(type) {
+      closeDrawers();
+      playTone(520, 'sine', 0.2);
+      if (type === 'studio') document.getElementById('drawerStudio').classList.add('open');
+      if (type === 'insta') document.getElementById('drawerInsta').classList.add('open');
+      if (type === 'news') document.getElementById('drawerNews').classList.add('open');
+      if (type === 'contact') document.getElementById('drawerContact').classList.add('open');
+    }
 
-    /* ==========================================
-       FORMS DISPATCH LOGIC
-       ========================================== */
-    document.getElementById('pickupForm').onsubmit = (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const text = `*New Pickup Consignment - Recompose Recycling*\n\nName: ${fd.get('Name')}\nPhone: ${fd.get('Phone')}\nEntity: ${fd.get('Entity')}\nStream: ${fd.get('Stream')}\nWeight: ${fd.get('Weight')}\nLocality: ${fd.get('Location')}\nNotes: ${fd.get('Notes')}`;
-      window.open(`https://wa.me/919999999999?text=${encodeURIComponent(text)}`, '_blank');
-    };
+    function openProjectDrawer(proj) {
+      document.getElementById('projTitle').textContent = proj.title;
+      document.getElementById('projDesc').textContent = proj.desc;
+      document.getElementById('projClient').textContent = proj.client;
+      document.getElementById('projYear').textContent = proj.year;
+      document.getElementById('projTech').textContent = proj.tech;
+      document.getElementById('projClientCategory').textContent = `OVERWORLD / ${proj.year}`;
+      openDrawer('project');
+      document.getElementById('drawerProject').classList.add('open');
+    }
 
-    document.getElementById('emailSubmitBtn').onclick = () => {
-      const form = document.getElementById('pickupForm');
-      const fd = new FormData(form);
-      const body = `Name: ${fd.get('Name')}\nPhone: ${fd.get('Phone')}\nEntity: ${fd.get('Entity')}\nStream: ${fd.get('Stream')}\nWeight: ${fd.get('Weight')}\nLocality: ${fd.get('Location')}\nNotes: ${fd.get('Notes')}`;
-      location.href = `mailto:recomposecbe@gmail.com?subject=Industrial Pickup Booking&body=${encodeURIComponent(body)}`;
-    };
-
-    /* ==========================================
-       OWNER ADMIN MODAL LOGIC
-       ========================================== */
+    /* -------------------------------------------------------------
+       E. OWNER ADMIN MANAGEMENT
+       ------------------------------------------------------------- */
     function openAdmin() {
-      const pin = prompt("Enter 4-Digit Owner PIN:");
-      if (pin === OWNER_PIN) {
+      const pin = prompt("Enter Owner Passcode (Default 1234):");
+      if (pin === "1234") {
         document.getElementById('adminModal').classList.add('active');
-        document.getElementById('admNewsTitle').value = APP_STATE.news.title;
-        document.getElementById('admNewsText').value = APP_STATE.news.text;
-        document.getElementById('admNewsDate').value = APP_STATE.news.date;
-        document.getElementById('admStatInput').value = APP_STATE.stat;
+        document.getElementById('admBadge').value = APP_STATE.news.badge;
+        document.getElementById('admHeadline').value = APP_STATE.news.headline;
+        document.getElementById('admFullText').value = APP_STATE.news.body;
+        document.getElementById('admDate').value = APP_STATE.news.date;
       } else if (pin !== null) {
-        alert("Authentication Failed. Check configuration.");
+        alert("Incorrect passcode.");
       }
     }
 
@@ -1363,9 +1114,22 @@
     }
 
     function switchAdminTab(tab) {
+      document.querySelectorAll('.admin-tab').forEach((b, i) => {
+        b.classList.toggle('active', (tab === 'news' && i === 0) || (tab === 'insta' && i === 1) || (tab === 'export' && i === 2));
+      });
       document.getElementById('admSecNews').style.display = tab === 'news' ? 'block' : 'none';
-      document.getElementById('admSecGallery').style.display = tab === 'gallery' ? 'block' : 'none';
-      document.getElementById('admSecStats').style.display = tab === 'stats' ? 'block' : 'none';
+      document.getElementById('admSecInsta').style.display = tab === 'insta' ? 'block' : 'none';
+      document.getElementById('admSecExport').style.display = tab === 'export' ? 'block' : 'none';
+    }
+
+    function saveNewsData() {
+      APP_STATE.news.badge = document.getElementById('admBadge').value;
+      APP_STATE.news.headline = document.getElementById('admHeadline').value;
+      APP_STATE.news.body = document.getElementById('admFullText').value;
+      APP_STATE.news.date = document.getElementById('admDate').value;
+      saveState();
+      alert("Header Announcement updated.");
+      closeAdmin();
     }
 
     function compressImage(file) {
@@ -1375,7 +1139,7 @@
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const max = 1200;
+            const max = 1000;
             let w = img.width, h = img.height;
             if (w > max || h > max) {
               const r = Math.min(max / w, max / h);
@@ -1392,59 +1156,28 @@
       });
     }
 
-    async function saveAdminNews() {
-      APP_STATE.news.title = document.getElementById('admNewsTitle').value;
-      APP_STATE.news.text = document.getElementById('admNewsText').value;
-      APP_STATE.news.date = document.getElementById('admNewsDate').value;
-      const fileInput = document.getElementById('admNewsFile');
-      if (fileInput.files[0]) {
-        APP_STATE.news.img = await compressImage(fileInput.files[0]);
-      }
+    async function addInstaPost() {
+      const cap = document.getElementById('admInstaCap').value;
+      const file = document.getElementById('admInstaFile').files[0];
+      if (!file) return alert("Select an image file.");
+
+      const b64 = await compressImage(file);
+      APP_STATE.insta.unshift({ img: b64, caption: cap });
       saveState();
-      alert("Header daily news updated successfully.");
+      alert("Instagram post added.");
       closeAdmin();
     }
 
-    async function addAdminGallery() {
-      const cap = document.getElementById('admGalCap').value;
-      const fileInput = document.getElementById('admGalFile');
-      if (fileInput.files[0]) {
-        const b64 = await compressImage(fileInput.files[0]);
-        APP_STATE.gallery.unshift({ cap, img: b64 });
-        saveState();
-        alert("Project photo added to gallery.");
-        closeAdmin();
-      } else {
-        alert("Please select an image file.");
-      }
-    }
-
-    function saveAdminStats() {
-      APP_STATE.stat = document.getElementById('admStatInput').value;
-      saveState();
-      alert("Hero metrics saved.");
-      closeAdmin();
-    }
-
-    function exportDataBackup() {
+    function exportData() {
       const blob = new Blob([JSON.stringify(APP_STATE, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'recompose-greensutra-data.json';
+      a.download = 'overworld-audio-content.json';
       a.click();
     }
 
-    function resetDefaultData() {
-      if (confirm("Reset back to default system templates?")) {
-        APP_STATE = JSON.parse(JSON.stringify(DEFAULT_STORE));
-        saveState();
-        closeAdmin();
-      }
-    }
-
     // Initialize
-    renderUI();
-    loadGameItem();
+    renderHeaderAndDrawers();
   </script>
 </body>
 </html>
