@@ -881,3 +881,570 @@
         <div class="tab-pane active" id="tab-0">
           <div class="table-responsive">
             <table>
+              <thead>
+                <tr>
+                  <th>Stream</th>
+                  <th>Governing Rules</th>
+                  <th>Applicability</th>
+                  <th>Outcome</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Plastic Packaging (Cat I-IV)</b></td>
+                  <td>PWM Rules 2016, Sched II</td>
+                  <td>Producers, Importers & Brand Owners</td>
+                  <td>Recycling credits & certificate redemption</td>
+                </tr>
+                <tr>
+                  <td><b>Multi-Layered Plastic (MLP)</b></td>
+                  <td>PWM Amendment Guidelines</td>
+                  <td>FMCG, Food & Beverage Packaging</td>
+                  <td>Paver block & sheet composite transformation</td>
+                </tr>
+                <tr>
+                  <td><b>Non-Metal Discard</b></td>
+                  <td>Solid Waste Management Rules</td>
+                  <td>Educational & Commercial campuses</td>
+                  <td>100% landfill diversion audit report</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-1">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Waste Category</th>
+                  <th>Reporting Frequency</th>
+                  <th>Statutory Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Plastic Packaging (PIBOs)</td>
+                  <td>Annual Portal Return</td>
+                  <td>30th June</td>
+                </tr>
+                <tr>
+                  <td>E-Waste Management</td>
+                  <td>Quarterly & Annual</td>
+                  <td>End of following month</td>
+                </tr>
+                <tr>
+                  <td>Battery Waste Returns</td>
+                  <td>Half-Yearly & Annual</td>
+                  <td>30th November & 30th June</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-2">
+          <div class="card" style="margin-top:20px;">
+            <h3>Mandatory Consent Documentation</h3>
+            <ul style="margin: 16px 0 0 20px; color: var(--text-muted); line-height: 1.8;">
+              <li>Consent to Establish (CTE) & Consent to Operate (CTO) from TNPCB</li>
+              <li>Centralised EPR Portal Registration ID for PIBO entities</li>
+              <li>Plastic Waste Processing Authorization (Form II)</li>
+              <li>Consolidated Manifest System for Industrial Consignments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: GALLERY & PROJECTS -->
+    <section class="page-section" id="p-gallery">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Visual Proof</div>
+          <h2>Circular Milestones in Action</h2>
+          <p>Real images from our ground drives, institutional partnerships, and material recovery runs.</p>
+        </div>
+
+        <div class="gallery-grid" id="projectGallery">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: SCHEDULE PICKUP -->
+    <section class="page-section" id="p-pickup">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Rapid Logistics</div>
+          <h2>Schedule a Collection or Drop-Off</h2>
+          <p>Submit your quantity and stream details. We verify and dispatch collection routes across Coimbatore.</p>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 44px);">
+          <form id="pickupForm" class="form-grid">
+            <div class="form-group">
+              <label>Authorized Contact Person</label>
+              <input type="text" class="form-control" name="Name" required placeholder="e.g. Ramesh Kumar">
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp</label>
+              <input type="tel" class="form-control" name="Phone" required placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label>Entity Category</label>
+              <select class="form-control" name="Entity">
+                <option>Commercial Facility / Office</option>
+                <option>Manufacturing Industry</option>
+                <option>School / College Campus</option>
+                <option>Gated Residential Community</option>
+                <option>Individual Household</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Primary Material Stream</label>
+              <select class="form-control" name="Stream">
+                <option>Multi-Layered Plastic (MLP)</option>
+                <option>PET & High Density Polymers</option>
+                <option>Old Paper / Cardboard Carton Waste</option>
+                <option>Glass Bottles & Container Cullet</option>
+                <option>Mixed Dry Scrap Consignment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Estimated Weight (KG or Tonnes)</label>
+              <input type="text" class="form-control" name="Weight" placeholder="e.g. 250 KG">
+            </div>
+            <div class="form-group">
+              <label>Locality / Pickup Hub</label>
+              <input type="text" class="form-control" name="Location" placeholder="e.g. Saravanampatti, Coimbatore" required>
+            </div>
+            <div class="form-group full">
+              <label>Specific Handling Notes</label>
+              <textarea class="form-control" name="Notes" placeholder="Access timing, loading dock availability, or packing state..."></textarea>
+            </div>
+            <div class="form-group full" style="display:flex; gap:12px; align-items:center; margin-top:8px;">
+              <button type="submit" class="btn btn-primary">Dispatch Request via WhatsApp</button>
+              <button type="button" class="btn btn-outline" id="emailSubmitBtn">Submit via Email</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 7: CONTACT -->
+    <section class="page-section" id="p-contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Direct Connect</div>
+          <h2>Partner with Recompose</h2>
+          <p>We are based out of Arasur, Coimbatore. Reach out directly for institutional tie-ups and EPR advisory.</p>
+        </div>
+
+        <div class="grid-cards" style="max-width: 900px; margin: 0 auto;">
+          <div class="card">
+            <h3>Operational Facility</h3>
+            <p style="margin-top:12px;">1/235, Bhagiyalakshmi Nagar, Muthalipalayam, Arasur Post, Coimbatore, Tamil Nadu 641407</p>
+            <p style="margin-top:16px;"><strong>Email:</strong> <span id="contactEmail">recomposecbe@gmail.com</span></p>
+            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/recomposerecycling" target="_blank" style="color:var(--primary);">@recomposerecycling</a></p>
+          </div>
+          <div class="card">
+            <h3>Quick Enquiry</h3>
+            <form id="quickContact" style="display:flex; flex-direction:column; gap:12px;">
+              <input type="text" class="form-control" placeholder="Your Name" required>
+              <input type="text" class="form-control" placeholder="Phone or Email" required>
+              <textarea class="form-control" placeholder="Message" style="min-height:90px;" required></textarea>
+              <button class="btn btn-primary" type="submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Client Admin Portal (Owner login) -->
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h3 style="font-size:22px; color:#fff;">Admin & News Manager</h3>
+        <button class="btn btn-outline" style="padding:6px 14px;" onclick="closeAdmin()">Close</button>
+      </div>
+
+      <div class="tabs-nav">
+        <button class="tab-pill active" id="adm-tab-news" onclick="switchAdminTab('news')">Header News</button>
+        <button class="tab-pill" id="adm-tab-gallery" onclick="switchAdminTab('gallery')">Project Photos</button>
+        <button class="tab-pill" id="adm-tab-stats" onclick="switchAdminTab('stats')">Live Metrics</button>
+      </div>
+
+      <!-- Admin News Form -->
+      <div id="admSecNews">
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>News Headline</label>
+          <input type="text" id="admNewsTitle" class="form-control">
+        </div>
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>News Description</label>
+          <textarea id="admNewsText" class="form-control"></textarea>
+        </div>
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>Date & Source</label>
+          <input type="text" id="admNewsDate" class="form-control" placeholder="e.g. October 2026 · Coimbatore Times">
+        </div>
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>Upload Banner Graphic (Instant Compression)</label>
+          <input type="file" id="admNewsFile" accept="image/*" class="form-control">
+        </div>
+        <button class="btn btn-primary" onclick="saveAdminNews()">Update Daily News</button>
+      </div>
+
+      <!-- Admin Gallery Form -->
+      <div id="admSecGallery" style="display:none;">
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>Project Title / Caption</label>
+          <input type="text" id="admGalCap" class="form-control">
+        </div>
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>Add Project Photo</label>
+          <input type="file" id="admGalFile" accept="image/*" class="form-control">
+        </div>
+        <button class="btn btn-primary" onclick="addAdminGallery()">Add to Project Gallery</button>
+      </div>
+
+      <!-- Admin Stats Form -->
+      <div id="admSecStats" style="display:none;">
+        <div class="form-group full" style="margin-bottom:14px;">
+          <label>Hero Metric Number (e.g. 2.25+ Tonnes)</label>
+          <input type="text" id="admStatInput" class="form-control">
+        </div>
+        <button class="btn btn-primary" onclick="saveAdminStats()">Save Metric</button>
+      </div>
+
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--surface-border); display:flex; gap:12px;">
+        <button class="btn btn-outline" onclick="exportDataBackup()">Backup JSON</button>
+        <button class="btn btn-outline" onclick="resetDefaultData()">Reset Defaults</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#home" class="brand-logo" style="margin-bottom:14px;">
+            <span class="dot"></span> Recompose
+          </a>
+          <p style="color:var(--text-muted); font-size:14px; max-width:320px;">
+            Scientific non-metal scrap management, EPR enablement, and valorization of challenging polymer waste streams in Coimbatore.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="#home" onclick="navigateTo('home')">Home</a>
+          <a href="#about" onclick="navigateTo('about')">About Us</a>
+          <a href="#game" onclick="navigateTo('game')">Segregation Game</a>
+          <a href="#services" onclick="navigateTo('services')">Services & EPR</a>
+        </div>
+        <div class="footer-col">
+          <h4>Statutory</h4>
+          <a href="#about" onclick="navigateTo('about')">CIN Registration</a>
+          <a href="#services" onclick="navigateTo('services')">CPCB & SPCB Framework</a>
+          <a href="#contact" onclick="navigateTo('contact')">Waste Acceptance Policy</a>
+        </div>
+        <div class="footer-col">
+          <h4>Direct</h4>
+          <p style="color:var(--text-muted); font-size:14px; margin-bottom:8px;">Arasur, Coimbatore 641407</p>
+          <a href="mailto:recomposecbe@gmail.com">recomposecbe@gmail.com</a>
+          <a href="https://wa.me/919999999999" target="_blank" style="color:var(--primary); font-weight:700;">+ WhatsApp Desk</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Recompose Recycling Private Limited. All Rights Reserved.</span>
+        <div>
+          <button style="color:var(--text-muted); font-size:12px;" onclick="openAdmin()">Owner Access</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================
+       PERSISTENT STATE & DATA CONFIG
+       ========================================== */
+    const OWNER_PIN = "1234";
+
+    const DEFAULT_STORE = {
+      news: {
+        title: "Vellingiri Hills: Multi-Layered Plastic Transformed into Paver Blocks",
+        text: "In collaboration with the Forest Department, over 2.25 tonnes of pilgrim plastic waste was diverted into roofing and infrastructure materials.",
+        date: "March 2025 · The Hindu",
+        tag: "In The Spotlight",
+        img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80"
+      },
+      stat: "2.25+",
+      gallery: [
+        { cap: "Multi-layered plastic collection drive at Vellingiri Foothills", img: "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=600&q=80" },
+        { cap: "Segregation and density baling at processing unit", img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" },
+        { cap: "Composite roofing and paver sheet fabrication", img: "https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?auto=format&fit=crop&w=600&q=80" }
+      ]
+    };
+
+    let APP_STATE = JSON.parse(localStorage.getItem('recompose_greensutra_db')) || DEFAULT_STORE;
+
+    function saveState() {
+      localStorage.setItem('recompose_greensutra_db', JSON.stringify(APP_STATE));
+      renderUI();
+    }
+
+    function renderUI() {
+      document.getElementById('newsTitle').textContent = APP_STATE.news.title;
+      document.getElementById('newsText').textContent = APP_STATE.news.text;
+      document.getElementById('newsDate').textContent = APP_STATE.news.date;
+      document.getElementById('newsImg').src = APP_STATE.news.img;
+      document.getElementById('stat-diverted').textContent = APP_STATE.stat;
+
+      const galContainer = document.getElementById('projectGallery');
+      galContainer.innerHTML = APP_STATE.gallery.map(item => `
+        <div class="gallery-item">
+          <img src="${item.img}" alt="${item.cap}">
+          <div class="gallery-cap">${item.cap}</div>
+        </div>
+      `).join('');
+    }
+
+    /* ==========================================
+       ROUTER & NAVIGATION
+       ========================================== */
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById('p-' + pageId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      document.querySelectorAll('#navMenu a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + pageId);
+      });
+      document.getElementById('navMenu').classList.remove('active');
+    }
+
+    window.addEventListener('hashchange', () => {
+      const page = location.hash.replace('#', '') || 'home';
+      navigateTo(page);
+    });
+
+    document.getElementById('menuToggle').onclick = () => {
+      document.getElementById('navMenu').classList.toggle('active');
+    };
+
+    /* ==========================================
+       TABS SWITCHER (EPR REGIMES)
+       ========================================== */
+    function switchTab(index) {
+      document.querySelectorAll('.tabs-nav .tab-pill').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.tab-pane').forEach((p, i) => {
+        p.classList.toggle('active', i === index);
+      });
+    }
+
+    /* ==========================================
+       INTERACTIVE WASTE SEGREGATION GAMEPLAY
+       ========================================== */
+    const GAME_ITEMS = [
+      { name: "Corrugated Cardboard Box", stream: "paper", icon: "📦", hint: "Clean dry packaging fiber" },
+      { name: "Empty PET Water Bottle", stream: "plastic", icon: "🍶", hint: "Crushed transparent polymer" },
+      { name: "Biscuit / Chips Foil Packet", stream: "plastic", icon: "🍫", hint: "Multi-layered foil (MLP)" },
+      { name: "Glass Jam Jar", stream: "glass", icon: "🫙", hint: "Inert container glass" },
+      { name: "Broken Fluorescent Tube", stream: "reject", icon: "💡", hint: "Hazardous phosphor discard" },
+      { name: "Used Office A4 Documents", stream: "paper", icon: "📄", hint: "Clean non-confidential sheets" },
+      { name: "Chemical Disinfectant Bottle", stream: "reject", icon: "☣️", hint: "Toxic residual packaging" }
+    ];
+
+    let currentItemIndex = 0;
+    let score = 0;
+    let streak = 0;
+
+    function loadGameItem() {
+      const item = GAME_ITEMS[currentItemIndex];
+      document.getElementById('tokenName').textContent = item.name;
+      document.getElementById('tokenIcon').textContent = item.icon;
+      document.getElementById('tokenHint').textContent = item.hint;
+      document.getElementById('activeToken').dataset.stream = item.stream;
+    }
+
+    function checkAnswer(chosenStream) {
+      const correctStream = GAME_ITEMS[currentItemIndex].stream;
+      const feedback = document.getElementById('gameFeedback');
+
+      if (chosenStream === correctStream) {
+        score += 10 + (streak * 2);
+        streak++;
+        feedback.className = "game-feedback success";
+        feedback.textContent = `✓ Correct! Diverted cleanly into circular processing.`;
+      } else {
+        streak = 0;
+        feedback.className = "game-feedback error";
+        feedback.textContent = `✗ Incorrect stream. Causes cross-contamination in batch recycling.`;
+      }
+
+      document.getElementById('gameScore').textContent = score;
+      document.getElementById('gameStreak').textContent = streak;
+
+      currentItemIndex = (currentItemIndex + 1) % GAME_ITEMS.length;
+      setTimeout(() => {
+        loadGameItem();
+      }, 700);
+    }
+
+    // Drag & Drop Listeners
+    const token = document.getElementById('activeToken');
+    token.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', token.dataset.stream);
+    });
+
+    document.querySelectorAll('.bin-target').forEach(bin => {
+      bin.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        bin.classList.add('drag-over');
+      });
+      bin.addEventListener('dragleave', () => {
+        bin.classList.remove('drag-over');
+      });
+      bin.addEventListener('drop', (e) => {
+        e.preventDefault();
+        bin.classList.remove('drag-over');
+        checkAnswer(bin.dataset.stream);
+      });
+      // Click fallback for mobile users
+      bin.addEventListener('click', () => {
+        checkAnswer(bin.dataset.stream);
+      });
+    });
+
+    /* ==========================================
+       FORMS DISPATCH LOGIC
+       ========================================== */
+    document.getElementById('pickupForm').onsubmit = (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const text = `*New Pickup Consignment - Recompose Recycling*\n\nName: ${fd.get('Name')}\nPhone: ${fd.get('Phone')}\nEntity: ${fd.get('Entity')}\nStream: ${fd.get('Stream')}\nWeight: ${fd.get('Weight')}\nLocality: ${fd.get('Location')}\nNotes: ${fd.get('Notes')}`;
+      window.open(`https://wa.me/919999999999?text=${encodeURIComponent(text)}`, '_blank');
+    };
+
+    document.getElementById('emailSubmitBtn').onclick = () => {
+      const form = document.getElementById('pickupForm');
+      const fd = new FormData(form);
+      const body = `Name: ${fd.get('Name')}\nPhone: ${fd.get('Phone')}\nEntity: ${fd.get('Entity')}\nStream: ${fd.get('Stream')}\nWeight: ${fd.get('Weight')}\nLocality: ${fd.get('Location')}\nNotes: ${fd.get('Notes')}`;
+      location.href = `mailto:recomposecbe@gmail.com?subject=Industrial Pickup Booking&body=${encodeURIComponent(body)}`;
+    };
+
+    /* ==========================================
+       OWNER ADMIN MODAL LOGIC
+       ========================================== */
+    function openAdmin() {
+      const pin = prompt("Enter 4-Digit Owner PIN:");
+      if (pin === OWNER_PIN) {
+        document.getElementById('adminModal').classList.add('active');
+        document.getElementById('admNewsTitle').value = APP_STATE.news.title;
+        document.getElementById('admNewsText').value = APP_STATE.news.text;
+        document.getElementById('admNewsDate').value = APP_STATE.news.date;
+        document.getElementById('admStatInput').value = APP_STATE.stat;
+      } else if (pin !== null) {
+        alert("Authentication Failed. Check configuration.");
+      }
+    }
+
+    function closeAdmin() {
+      document.getElementById('adminModal').classList.remove('active');
+    }
+
+    function switchAdminTab(tab) {
+      document.getElementById('admSecNews').style.display = tab === 'news' ? 'block' : 'none';
+      document.getElementById('admSecGallery').style.display = tab === 'gallery' ? 'block' : 'none';
+      document.getElementById('admSecStats').style.display = tab === 'stats' ? 'block' : 'none';
+    }
+
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const max = 1200;
+            let w = img.width, h = img.height;
+            if (w > max || h > max) {
+              const r = Math.min(max / w, max / h);
+              w *= r; h *= r;
+            }
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function saveAdminNews() {
+      APP_STATE.news.title = document.getElementById('admNewsTitle').value;
+      APP_STATE.news.text = document.getElementById('admNewsText').value;
+      APP_STATE.news.date = document.getElementById('admNewsDate').value;
+      const fileInput = document.getElementById('admNewsFile');
+      if (fileInput.files[0]) {
+        APP_STATE.news.img = await compressImage(fileInput.files[0]);
+      }
+      saveState();
+      alert("Header daily news updated successfully.");
+      closeAdmin();
+    }
+
+    async function addAdminGallery() {
+      const cap = document.getElementById('admGalCap').value;
+      const fileInput = document.getElementById('admGalFile');
+      if (fileInput.files[0]) {
+        const b64 = await compressImage(fileInput.files[0]);
+        APP_STATE.gallery.unshift({ cap, img: b64 });
+        saveState();
+        alert("Project photo added to gallery.");
+        closeAdmin();
+      } else {
+        alert("Please select an image file.");
+      }
+    }
+
+    function saveAdminStats() {
+      APP_STATE.stat = document.getElementById('admStatInput').value;
+      saveState();
+      alert("Hero metrics saved.");
+      closeAdmin();
+    }
+
+    function exportDataBackup() {
+      const blob = new Blob([JSON.stringify(APP_STATE, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'recompose-greensutra-data.json';
+      a.click();
+    }
+
+    function resetDefaultData() {
+      if (confirm("Reset back to default system templates?")) {
+        APP_STATE = JSON.parse(JSON.stringify(DEFAULT_STORE));
+        saveState();
+        closeAdmin();
+      }
+    }
+
+    // Initialize
+    renderUI();
+    loadGameItem();
+  </script>
+</body>
+</html>
